@@ -59,7 +59,7 @@ import UIKit
     
     
     //MARK: - Initialiser
-    @objc public convenience init(title: String, description: String, image: UIImage?, style: PMAlertControllerStyle) {
+    @objc public convenience init(title: String?, description: String?, image: UIImage?, style: PMAlertControllerStyle) {
         self.init()
         guard let nib = loadNibAlertController(), let unwrappedView = nib[0] as? UIView else { return }
         self.view = unwrappedView
@@ -69,9 +69,20 @@ import UIKit
         
         alertView.layer.cornerRadius = 5
         (image != nil) ? (alertImage.image = image) : (headerViewHeightConstraint.constant = 0)
-        alertTitle.text = title
+
         alertDescription.text = description
-        
+
+        if let titleText = title {
+            alertTitle.text = titleText
+        } else {
+            alertTitle.removeFromSuperview()
+        }
+
+        if let descriptionText = description {
+            alertDescription.text = descriptionText
+        } else {
+            alertDescription.removeFromSuperview()
+        }
         
         //if alert width = 270, else width = screen width - 36
         style == .alert ? (alertViewWidthConstraint.constant = 270) : (alertViewWidthConstraint.constant = UIScreen.main.bounds.width - 36)
