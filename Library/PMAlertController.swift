@@ -83,6 +83,11 @@ import UIKit
         } else {
             alertDescription.removeFromSuperview()
         }
+
+        if title == nil && description == nil {
+            alertContentStackViewTopConstraint.constant = 0
+            view.layoutIfNeeded()
+        }
         
         //if alert width = 270, else width = screen width - 36
         style == .alert ? (alertViewWidthConstraint.constant = 270) : (alertViewWidthConstraint.constant = UIScreen.main.bounds.width - 36)
